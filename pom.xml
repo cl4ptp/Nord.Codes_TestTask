@@ -16,6 +16,7 @@
         <allure.version>2.27.0</allure.version>
         <aspectj.version>1.9.22</aspectj.version>
         <wiremock.version>3.5.4</wiremock.version>
+        <rest-assured.version>5.4.0</rest-assured.version>
     </properties>
 
     <dependencies>
@@ -32,6 +33,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-rest-assured</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.27.7</version>
@@ -41,7 +48,7 @@
             <groupId>org.wiremock</groupId>
             <artifactId>wiremock-standalone</artifactId>
             <version>${wiremock.version}</version>
-            <scope>test</scope>
+            <scope>src</scope>
         </dependency>
     </dependencies>
 

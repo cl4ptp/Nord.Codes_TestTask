@@ -1,6 +1,6 @@
 package tests;
 
-import mock.ExternalServiceMock;
+import org.mock.ExternalServiceMock;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
