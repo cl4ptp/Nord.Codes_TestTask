@@ -1,5 +1,8 @@
 package org.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiResponse {
     private String result;
     private String message;
