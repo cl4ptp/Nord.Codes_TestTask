@@ -6,9 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.utils.TokenGenerator;
 
-import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class AuthTest extends BaseTest {
 
@@ -21,7 +21,6 @@ public class AuthTest extends BaseTest {
 
         Response response = apiClient.sendRequest(token, "LOGIN");
 
-        assertThat(response.getStatusCode()).isEqualTo(200);
         assertEquals(200, response.getStatusCode(), "");
     }
 }
