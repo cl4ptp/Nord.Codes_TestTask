@@ -36,4 +36,11 @@ public class ExternalServiceMock {
                 .withRequestBody(containing("token=" + token))
                 .willReturn(aResponse().withStatus(200)));
     }
+
+    public void stubAuthFailure(String token, int code) {
+        wireMockServer.stubFor(post(urlEqualTo("/auth"))
+                .withHeader("Content-Type", containing("application/x-www-form-urlencoded"))
+                .withRequestBody(containing("token=" + token))
+                .willReturn(aResponse().withStatus(code)));
+    }
 }
