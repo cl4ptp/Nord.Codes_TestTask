@@ -5,7 +5,8 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+
 
 public class ExternalServiceMock {
     private final WireMockServer wireMockServer;
@@ -27,5 +28,12 @@ public class ExternalServiceMock {
 
     public void reset() {
         wireMockServer.resetAll();
+    }
+
+    public void stubAuthSuccess(String token) {
+        wireMockServer.stubFor(post(urlEqualTo("/auth"))
+                .withHeader("Content-Type", containing("application/x-www-form-urlencoded"))
+                .withRequestBody(containing("token=" + token))
+                .willReturn(aResponse().withStatus(200)));
     }
 }

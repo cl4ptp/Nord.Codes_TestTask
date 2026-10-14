@@ -2,7 +2,7 @@ package org.utils;
 
 import java.security.SecureRandom;
 
-public class utils {
+public class TokenGenerator {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final SecureRandom RANDOM = new SecureRandom();
 

@@ -10,11 +10,11 @@ import java.util.Map;
 
 public class ApiClient {
     private final String baseUrl;
-    private final String apiKey;
+    private final String defaultApiKey;
 
     public ApiClient(String baseUrl, String apiKey) {
         this.baseUrl = baseUrl;
-        this.apiKey = apiKey;
+        this.defaultApiKey = apiKey;
     }
 
     public Response sendRequest(String token, String action, String apiKey) {
@@ -33,5 +33,9 @@ public class ApiClient {
         }
 
         return requestSpecification.post("/endpoint");
+    }
+
+    public Response sendRequest(String token, String action) {
+        return sendRequest(token, action, defaultApiKey);
     }
 }

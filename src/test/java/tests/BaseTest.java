@@ -1,5 +1,6 @@
 package tests;
 
+import org.client.ApiClient;
 import org.mock.ExternalServiceMock;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,6 +11,7 @@ public class BaseTest {
     public static final String BASE_URL = "http://localhost:8080";
     public static final int MOCK_PORT = 8888;
     public static ExternalServiceMock mockService;
+    public static ApiClient apiClient;
 
     @BeforeAll
     static void setUpMock() {
