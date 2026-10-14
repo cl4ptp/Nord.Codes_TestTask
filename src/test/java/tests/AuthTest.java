@@ -15,7 +15,7 @@ public class AuthTest extends BaseTest {
     @Story("LOGIN")
     @DisplayName("Successfully login")
     void successfulLoginTest() {
-        String token = TokenGenerator.generateToken();
+        String token = TokenGenerator.generateValidToken();
         mockService.stubAuthSuccess(token);
 
         Response response = apiClient.sendRequest(token, "LOGIN");
