@@ -15,14 +15,14 @@ public class AuthTest extends BaseTest {
     @Story("LOGIN")
     @DisplayName("Successfully login")
     void successfulLoginTest() {
-        String token = TokenGenerator.generateValidToken();
+        String token = TokenGenerator.generateToken();
         mockService.stubAuthSuccess(token);
 
         Response response = apiClient.sendRequest(token, "LOGIN");
 
         assertEquals(200, response.getStatusCode(), "Login failed");
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("OK", body.getResult(), "Login successfully, but error messaage in body = " + body.getMessage());
+        assertEquals("OK", body.getResult(), "Login in external service successfully, but error messaage in body = " + body.getMessage());
     }
 
     @Test
@@ -36,8 +36,21 @@ public class AuthTest extends BaseTest {
 
         assertEquals(401, response.getStatusCode(), "Login successful, but should be failed");
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("ERROR", body.getResult(), "Login successful, but should be failed");
+        assertEquals("ERROR", body.getResult(), "Login in external service successful, but should be failed");
     }
 
+    @Test
+    @Story("LOGOUT")
+    @DisplayName("Successfully logout")
+    void successfullyLogout() {
+        String token = TokenGenerator.generateValidToken();
+        mockService.stubAuthSuccess(token);
 
+        apiClient.sendRequest(token, "LOGIN");
+        Response response = apiClient.sendRequest(token, "LOGOUT");
+
+        assertEquals(200, response.getStatusCode(), "Logout failed");
+        ApiResponse body = response.as(ApiResponse.class);
+        assertEquals("OK", body.getResult(), "Logout from external service successfully, but error message in body = " + body.getMessage());
+    }
 }

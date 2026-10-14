@@ -1,6 +1,7 @@
 package org.utils;
 
 import java.security.SecureRandom;
+import java.util.UUID;
 
 public class TokenGenerator {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -12,5 +13,9 @@ public class TokenGenerator {
             stringBuilder.append(CHARACTERS.charAt(RANDOM.nextInt(CHARACTERS.length())));
         }
         return stringBuilder.toString();
+    }
+
+    public static String generateToken() {
+        return UUID.randomUUID().toString().replace("-", "").toUpperCase();
     }
 }

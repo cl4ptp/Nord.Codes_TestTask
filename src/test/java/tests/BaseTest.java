@@ -17,6 +17,7 @@ public class BaseTest {
     static void setUpMock() {
         mockService = new ExternalServiceMock(MOCK_PORT);
         mockService.start();
+        apiClient = new ApiClient(BASE_URL, API_KEY);
     }
 
     @AfterAll
