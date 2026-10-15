@@ -42,8 +42,9 @@ public class AuthTest extends BaseTest {
 
     @Test
     @Story("LOGIN")
+    @Tag("BUG")
     @DisplayName("Unsuccessfully external service login")
-    @Disabled("BUG: Downstream 401 translated to 500")
+    @Disabled("BUG: Downstream 401 translated to 500 (see Issue #2)")
     void loginExternalAuthFailed() {
         String token = TokenGenerator.generateValidToken();
 
