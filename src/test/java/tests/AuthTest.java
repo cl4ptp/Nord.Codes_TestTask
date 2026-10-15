@@ -21,9 +21,9 @@ public class AuthTest extends BaseTest {
 
         Response response = apiClient.sendRequest(token, LOGIN.name());
 
-        assertEquals(200, response.getStatusCode(), "Login failed");
+        assertEquals(200, response.getStatusCode(), "Expected HTTP 200 status code on successful LOGIN request");
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("OK", body.getResult(), "Login in external service successfully, but error message received in body = " + body.getMessage());
+        assertEquals("OK", body.getResult(), "Expected result to be 'OK', but received message:" + body.getMessage());
     }
 
     @Test
@@ -35,9 +35,9 @@ public class AuthTest extends BaseTest {
 
         Response response = apiClient.sendRequest(token, LOGIN.name());
 
-        assertEquals(401, response.getStatusCode(), "Login successful, but should be failed");
+        assertEquals(401, response.getStatusCode(), "Expected HTTP 401 Unauthorized when external auth service responds with an error");
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("ERROR", body.getResult(), "Login in external service successful, but should be failed");
+        assertEquals("ERROR", body.getResult(), "Expected result field to be 'ERROR' after external auth rejection");
     }
 
     @Test
@@ -50,8 +50,8 @@ public class AuthTest extends BaseTest {
         apiClient.sendRequest(token, LOGIN.name());
         Response response = apiClient.sendRequest(token, LOGOUT.name());
 
-        assertEquals(200, response.getStatusCode(), "Logout failed");
+        assertEquals(200, response.getStatusCode(), "Expected HTTP 200 status code on successful LOGOUT request");
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("OK", body.getResult(), "Logout from external service successfully, but error message received in body = " + body.getMessage());
+        assertEquals("OK", body.getResult(), "Expected session to be terminated with result 'OK', but received: " + body.getMessage());
     }
 }

@@ -23,9 +23,9 @@ public class ActionTest extends BaseTest {
         apiClient.sendRequest(token, LOGIN.name());
         Response response = apiClient.sendRequest(token, ACTION.name());
 
-        assertEquals(200, response.getStatusCode(), "Action failed");
+        assertEquals(200, response.getStatusCode(), "Expected HTTP 200 status code on successful ACTION request");
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("OK", body.getResult(), "Action in external service failed, error message received in body: " + body.getMessage());
+        assertEquals("OK", body.getResult(), "Expected result to be 'OK', but received error message:" + body.getMessage());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class ActionTest extends BaseTest {
         Response response = apiClient.sendRequest(token, ACTION.name());
 
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("ERROR", body.getResult(), "Action in external service without login successful");
+        assertEquals("ERROR", body.getResult(), "Expected operation to be rejected with 'ERROR' for a non-authenticated token");
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ActionTest extends BaseTest {
         Response response = apiClient.sendRequest(token, ACTION.name());
 
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("ERROR", body.getResult(), "Action in external service after logout successful");
+        assertEquals("ERROR", body.getResult(), "Expected operation to be rejected with 'ERROR' because session was terminated via LOGOUT");
     }
 
     @Test
@@ -66,7 +66,8 @@ public class ActionTest extends BaseTest {
         apiClient.sendRequest(token, LOGIN.name());
         Response response = apiClient.sendRequest(token, ACTION.name());
 
+        assertEquals(500, response.getStatusCode(), "Expected HTTP 500 when external /doAction service responds with server error");
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("ERROR", body.getResult(), "Action in external service successful");
+        assertEquals("ERROR", body.getResult(), "Expected result to be 'ERROR' due to downstream /doAction failure");
     }
 }

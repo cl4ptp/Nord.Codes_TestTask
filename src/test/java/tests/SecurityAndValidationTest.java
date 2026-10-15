@@ -21,7 +21,7 @@ public class SecurityAndValidationTest extends BaseTest {
         String token = TokenGenerator.generateValidToken();
         Response response = apiClient.sendRequest(token, LOGIN.name(), null);
 
-        assertEquals(403, response.getStatusCode(), "Login successful");
+        assertEquals(401, response.getStatusCode(), "Expected error 401 Unauthorized when X-Api-Key header is missing");
     }
 
     @Test
@@ -31,7 +31,7 @@ public class SecurityAndValidationTest extends BaseTest {
         String token = TokenGenerator.generateValidToken();
         Response response = apiClient.sendRequest(token, LOGIN.name(), "Invalid_key");
 
-        assertEquals(403, response.getStatusCode(), "Login successful");
+        assertEquals(401, response.getStatusCode(), "Expected error 401 Unauthorized when X-Api-Key header is wrong");
     }
 
     @ParameterizedTest
@@ -47,7 +47,7 @@ public class SecurityAndValidationTest extends BaseTest {
         Response response = apiClient.sendRequest(invalidToken, LOGIN.name());
 
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("ERROR", body.getResult(), "Login successful");
+        assertEquals("ERROR", body.getResult(), "Expected error when token is wrong");
     }
 
     @Test
@@ -59,6 +59,6 @@ public class SecurityAndValidationTest extends BaseTest {
         Response response = apiClient.sendRequest(token, "UNSUPPORTED_ACTION");
 
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("ERROR", body.getResult(), "Success send unexpected action");
+        assertEquals("ERROR", body.getResult(), "Expected error when send unexpected action");
     }
 }
