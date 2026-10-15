@@ -11,3 +11,6 @@ target/
 
 ### Allure ###
 .allure/
+
+### Internal ###
+internal-0.0.1-SNAPSHOT.jar
