@@ -43,4 +43,18 @@ public class ExternalServiceMock {
                 .withRequestBody(containing("token=" + token))
                 .willReturn(aResponse().withStatus(code)));
     }
+
+    public void stubActionSuccess(String token) {
+        wireMockServer.stubFor(post(urlEqualTo("/doAction"))
+                .withHeader("Content-Type", containing("application/x-www-form-urlencoded"))
+                .withRequestBody(containing("token=" + token))
+                .willReturn(aResponse().withStatus(200)));
+    }
+
+    public void stubActionFaailed(String token, int code) {
+        wireMockServer.stubFor(post(urlEqualTo("/doAction"))
+                .withHeader("Content-Type", containing("application/x-www-form-urlencoded"))
+                .withRequestBody(containing("token=" + token))
+                .willReturn(aResponse().withStatus(code)));
+    }
 }

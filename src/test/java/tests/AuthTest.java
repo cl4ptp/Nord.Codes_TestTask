@@ -8,6 +8,7 @@ import org.model.ApiResponse;
 import org.utils.TokenGenerator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.model.ActionType.*;
 
 public class AuthTest extends BaseTest {
 
@@ -18,11 +19,11 @@ public class AuthTest extends BaseTest {
         String token = TokenGenerator.generateValidToken();
         mockService.stubAuthSuccess(token);
 
-        Response response = apiClient.sendRequest(token, "LOGIN");
+        Response response = apiClient.sendRequest(token, LOGIN.name());
 
         assertEquals(200, response.getStatusCode(), "Login failed");
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("OK", body.getResult(), "Login in external service successfully, but error messaage in body = " + body.getMessage());
+        assertEquals("OK", body.getResult(), "Login in external service successfully, but error message received in body = " + body.getMessage());
     }
 
     @Test
@@ -32,7 +33,7 @@ public class AuthTest extends BaseTest {
         String token = TokenGenerator.generateValidToken();
         mockService.stubAuthFailure(token, 401);
 
-        Response response = apiClient.sendRequest(token, "LOGIN");
+        Response response = apiClient.sendRequest(token, LOGIN.name());
 
         assertEquals(401, response.getStatusCode(), "Login successful, but should be failed");
         ApiResponse body = response.as(ApiResponse.class);
@@ -46,11 +47,11 @@ public class AuthTest extends BaseTest {
         String token = TokenGenerator.generateValidToken();
         mockService.stubAuthSuccess(token);
 
-        apiClient.sendRequest(token, "LOGIN");
-        Response response = apiClient.sendRequest(token, "LOGOUT");
+        apiClient.sendRequest(token, LOGIN.name());
+        Response response = apiClient.sendRequest(token, LOGOUT.name());
 
         assertEquals(200, response.getStatusCode(), "Logout failed");
         ApiResponse body = response.as(ApiResponse.class);
-        assertEquals("OK", body.getResult(), "Logout from external service successfully, but error message in body = " + body.getMessage());
+        assertEquals("OK", body.getResult(), "Logout from external service successfully, but error message received in body = " + body.getMessage());
     }
 }
