@@ -9,7 +9,6 @@ import org.utils.TokenGenerator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.model.ActionType.*;
-import static wiremock.com.github.jknack.handlebars.helper.ConditionalHelpers.or;
 
 public class ActionTest extends BaseTest {
 
