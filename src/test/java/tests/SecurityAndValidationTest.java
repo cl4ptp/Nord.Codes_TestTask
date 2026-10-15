@@ -22,6 +22,9 @@ public class SecurityAndValidationTest extends BaseTest {
         Response response = apiClient.sendRequest(token, LOGIN.name(), null);
 
         assertEquals(401, response.getStatusCode(), "Expected error 401 Unauthorized when X-Api-Key header is missing");
+        ApiResponse body = response.as(ApiResponse.class);
+        assertEquals("ERROR", body.getResult(), "Expected result to be 'ERROR' due to downstream /auth failure");
+        assertEquals("Missing or invalid API Key", body.getMessage(), "Expected message to be 'Missing or invalid API Key' due to downstream /auth failure");
     }
 
     @Test
@@ -32,6 +35,9 @@ public class SecurityAndValidationTest extends BaseTest {
         Response response = apiClient.sendRequest(token, LOGIN.name(), "Invalid_key");
 
         assertEquals(401, response.getStatusCode(), "Expected error 401 Unauthorized when X-Api-Key header is wrong");
+        ApiResponse body = response.as(ApiResponse.class);
+        assertEquals("ERROR", body.getResult(), "Expected result to be 'ERROR' due to downstream /auth failure");
+        assertEquals("Missing or invalid API Key", body.getMessage(), "Expected message to be 'Missing or invalid API Key' due to downstream /auth failure");
     }
 
     @ParameterizedTest
@@ -48,6 +54,8 @@ public class SecurityAndValidationTest extends BaseTest {
 
         ApiResponse body = response.as(ApiResponse.class);
         assertEquals("ERROR", body.getResult(), "Expected error when token is wrong");
+        assertEquals("token: должно соответствовать \"^[0-9A-F]{32}$\"", body.getMessage(),
+                "Expected notification that the token has wrong, but received a different message: '" + body.getMessage() + "'");
     }
 
     @Test
@@ -60,5 +68,7 @@ public class SecurityAndValidationTest extends BaseTest {
 
         ApiResponse body = response.as(ApiResponse.class);
         assertEquals("ERROR", body.getResult(), "Expected error when send unexpected action");
+        assertEquals("action: invalid action 'UNSUPPORTED_ACTION'. Allowed: LOGIN, LOGOUT, ACTION", body.getMessage(),
+                "Expected notification that the action has wrong, but received a different message: '" + body.getMessage() + "'");
     }
 }

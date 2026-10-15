@@ -62,4 +62,9 @@ public class ExternalServiceMock {
                 .withRequestBody(containing("token=" + token))
                 .willReturn(aResponse().withStatus(code)));
     }
+
+    @Step("\"Verify external service received exactly {count} request(s) to '{url}'")
+    public int getRequestCount(String url) {
+        return wireMockServer.findAll(postRequestedFor(urlEqualTo(url))).size();
+    }
 }
