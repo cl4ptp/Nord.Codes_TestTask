@@ -2,8 +2,7 @@ package tests;
 
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.model.ApiResponse;
@@ -70,5 +69,18 @@ public class SecurityAndValidationTest extends BaseTest {
         assertEquals("ERROR", body.getResult(), "Expected error when send unexpected action");
         assertEquals("action: invalid action 'UNSUPPORTED_ACTION'. Allowed: LOGIN, LOGOUT, ACTION", body.getMessage(),
                 "Expected notification that the action has wrong, but received a different message: '" + body.getMessage() + "'");
+    }
+
+    @Test
+    @Story("Token Validation")
+    @Tag("BUG")
+    @DisplayName("Check support token with characters G-Z")
+    void testTokenWithCharsBeyondHex() {
+        String tokenWithGtoZ = "123456789012345678901234567890GZ";
+        mockService.stubAuthSuccess(tokenWithGtoZ);
+
+        Response response = apiClient.sendRequest(tokenWithGtoZ, LOGIN.name());
+
+        assertEquals(200, response.getStatusCode(), "App fails to accept valid characters G-Z");
     }
 }

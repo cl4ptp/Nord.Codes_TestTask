@@ -15,6 +15,7 @@ public class TokenGenerator {
         return stringBuilder.toString();
     }
 
+    //TODO: BUG, Token should be accepted in regex A-Z0-9, but now accepting in A-F0-9 regex
     public static String generateValidToken() {
         return UUID.randomUUID().toString().replace("-", "").toUpperCase();
     }
