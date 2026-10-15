@@ -4,6 +4,7 @@ package org.mock;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import io.qameta.allure.Step;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
@@ -30,6 +31,7 @@ public class ExternalServiceMock {
         wireMockServer.resetAll();
     }
 
+    @Step("Mock external service: successful authentication (/auth -> 200 OK) for token '{token}'")
     public void stubAuthSuccess(String token) {
         wireMockServer.stubFor(post(urlEqualTo("/auth"))
                 .withHeader("Content-Type", containing("application/x-www-form-urlencoded"))
@@ -37,6 +39,7 @@ public class ExternalServiceMock {
                 .willReturn(aResponse().withStatus(200)));
     }
 
+    @Step("Mock external service: authentication rejected (/auth -> {statusCode}) for token '{token}'")
     public void stubAuthFailure(String token, int code) {
         wireMockServer.stubFor(post(urlEqualTo("/auth"))
                 .withHeader("Content-Type", containing("application/x-www-form-urlencoded"))
@@ -44,6 +47,7 @@ public class ExternalServiceMock {
                 .willReturn(aResponse().withStatus(code)));
     }
 
+    @Step("Mock external service: successful action (/doAction -> 200 OK) for token '{token}'")
     public void stubActionSuccess(String token) {
         wireMockServer.stubFor(post(urlEqualTo("/doAction"))
                 .withHeader("Content-Type", containing("application/x-www-form-urlencoded"))
@@ -51,6 +55,7 @@ public class ExternalServiceMock {
                 .willReturn(aResponse().withStatus(200)));
     }
 
+    @Step("Mock external service: action failure (/doAction -> {statusCode}) for token '{token}'")
     public void stubActionFaailed(String token, int code) {
         wireMockServer.stubFor(post(urlEqualTo("/doAction"))
                 .withHeader("Content-Type", containing("application/x-www-form-urlencoded"))
