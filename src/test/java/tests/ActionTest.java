@@ -69,7 +69,7 @@ public class ActionTest extends BaseTest {
     void actionExternalFailureTest() {
         String token = TokenGenerator.generateValidToken();
         mockService.stubAuthSuccess(token);
-        mockService.stubActionFaailed(token, 500);
+        mockService.stubActionFailed(token, 500);
 
         apiClient.sendRequest(token, LOGIN.name());
         Response response = apiClient.sendRequest(token, ACTION.name());

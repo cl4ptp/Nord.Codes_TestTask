@@ -56,7 +56,7 @@ public class ExternalServiceMock {
     }
 
     @Step("Mock external service: action failure (/doAction -> {statusCode}) for token '{token}'")
-    public void stubActionFaailed(String token, int code) {
+    public void stubActionFailed(String token, int code) {
         wireMockServer.stubFor(post(urlEqualTo("/doAction"))
                 .withHeader("Content-Type", containing("application/x-www-form-urlencoded"))
                 .withRequestBody(containing("token=" + token))

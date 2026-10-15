@@ -41,7 +41,7 @@ public class SecurityAndValidationTest extends BaseTest {
 
     @ParameterizedTest
     @Story("Token Validation")
-    @DisplayName("CHeck token format(32 chars, A-Z, 0-9)")
+    @DisplayName("Check token format(32 chars, A-Z, 0-9)")
     @ValueSource(strings = {
             "SHORTTOKEN",
             "TOKENLONGERTHAN32CHARACTERS1234567",

@@ -29,7 +29,7 @@ public class AuthTest extends BaseTest {
     @Story("LOGIN")
     @DisplayName("Unsuccessfully external service login")
     @Disabled("BUG: Downstream 401 translated to 500")
-    void loginExternaalAuthFailed() {
+    void loginExternalAuthFailed() {
         String token = TokenGenerator.generateValidToken();
         mockService.stubAuthFailure(token, 401);
 
