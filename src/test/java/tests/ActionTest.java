@@ -36,13 +36,13 @@ public class ActionTest extends BaseTest {
 
         Response response = apiClient.sendRequest(token, ACTION.name());
 
-        assertEquals(403, response.getStatusCode(), "Expected HTTP 403 Unauthorized status code on failure ACTION request");
+        assertEquals(403, response.getStatusCode(), "Expected HTTP 403 Forbidden status code on failure ACTION request");
         ApiResponse body = response.as(ApiResponse.class);
         assertEquals("ERROR", body.getResult(), "Expected operation to be rejected with 'ERROR' for a non-authenticated token");
         assertEquals("Token '" + token + "' not found", body.getMessage(),
                 "Expected notification that the token was not found, but received a different message: '" + body.getMessage() + "'");
         assertEquals(0, mockService.getRequestCount("/doAction"),
-                "External service /doAction should not be called when token is unauthorized");
+                "External service /doAction should not be called when token is forbidden");
     }
 
     @Test
@@ -56,7 +56,7 @@ public class ActionTest extends BaseTest {
         apiClient.sendRequest(token, LOGOUT.name());
         Response response = apiClient.sendRequest(token, ACTION.name());
 
-        assertEquals(403, response.getStatusCode(), "Expected HTTP 403 Unauthorized status code on failure ACTION request");
+        assertEquals(403, response.getStatusCode(), "Expected HTTP 403 Forbidden status code on failure ACTION request");
         ApiResponse body = response.as(ApiResponse.class);
         assertEquals("ERROR", body.getResult(), "Expected operation to be rejected with 'ERROR' because session was terminated via LOGOUT");
         assertEquals("Token '" + token + "' not found", body.getMessage(),
